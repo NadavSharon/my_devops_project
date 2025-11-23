@@ -1,24 +1,20 @@
-name: Run System Monitor
+name: Run System Monitor (Docker)
 
-# מתי להריץ? בכל פעם שעושים push
 on: [push]
 
 jobs:
-  check-system:
-    # על איזה מחשב לרוץ? (מחשב של גיטהאב)
+  docker-check:
     runs-on: ubuntu-latest
 
     steps:
-      # שלב 1: תביא את הקוד מהמחסן למחשב
+      # שלב 1: הבאת הקוד (כרגיל)
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # שלב 2: תתקין פייתון
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
+      # שלב 2: בניית הקונטיינר (בדיוק כמו במחשב שלך)
+      - name: Build Docker Image
+        run: docker build -t my-monitor-image .
 
-      # שלב 3: תריץ את הסקריפט שלנו!
-      - name: Run monitor script
-        run: python monitor.py
+      # שלב 3: הרצת הקונטיינר לבדיקה
+      - name: Run Container
+        run: docker run --rm my-monitor-image
