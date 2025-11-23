@@ -1,0 +1,24 @@
+name: Run System Monitor
+
+# מתי להריץ? בכל פעם שעושים push
+on: [push]
+
+jobs:
+  check-system:
+    # על איזה מחשב לרוץ? (מחשב של גיטהאב)
+    runs-on: ubuntu-latest
+
+    steps:
+      # שלב 1: תביא את הקוד מהמחסן למחשב
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # שלב 2: תתקין פייתון
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      # שלב 3: תריץ את הסקריפט שלנו!
+      - name: Run monitor script
+        run: python monitor.py
